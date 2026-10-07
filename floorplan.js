@@ -135,15 +135,24 @@ const FloorPlanEngine = {
         <rect x="25" y="25" width="750" height="1000" fill="none" stroke="#1E293B" stroke-width="2.5"/>
         <rect x="30" y="30" width="740" height="990" fill="none" stroke="#64748B" stroke-width="1"/>
 
-        <!-- HEADER KOP GAMBAR -->
+        <!-- HEADER KOP GAMBAR STUDIO LENTERA -->
         <g id="title-block-header">
-          <text x="50" y="65" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#1E293B">RUMAH MASA DEPAN</text>
-          <text x="50" y="86" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#3E5C50">SKEMA PEMBAGIAN RUANG & DENAH LAYAK HUNI • KONSULTASI AWAL</text>
+          <!-- Logo Studio Lentera Mark -->
+          <g transform="translate(48, 44) scale(0.36)">
+            <path d="M 28 8 L 82 8 L 104 68 L 74 100 L 74 132 L 96 150 L 14 150 L 36 132 L 36 100 L 6 68 Z" fill="none" stroke="#914C35" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M 38 100 L 55 80 L 72 100" fill="none" stroke="#914C35" stroke-width="11" stroke-linejoin="round"/>
+            <path d="M 50 148 L 50 128 A 5 5 0 0 1 60 128 L 60 148" fill="none" stroke="#914C35" stroke-width="9"/>
+            <path d="M 44 26 L 66 26 L 76 68 L 55 92 L 34 68 Z" fill="none" stroke="#914C35" stroke-width="10" stroke-linejoin="round"/>
+          </g>
+          
+          <text x="96" y="58" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#914C35">STUDIO LENTERA • ARSITEKTUR &amp; PERENCANAAN</text>
+          <text x="96" y="80" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="20" font-weight="800" fill="#1E293B">RUMAH MASA DEPAN</text>
+          <text x="96" y="98" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#35653E">SKEMA PEMBAGIAN RUANG &amp; DENAH LAYAK HUNI (SNI 03-1733)</text>
           
           <!-- Indikator Skala & Tanggal -->
-          <text x="600" y="65" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">SKALA: 1 : 100</text>
-          <text x="600" y="82" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">LUAS TANAH: ${luasTanah} m² (${widthM}x${lengthM} m)</text>
-          <text x="600" y="99" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">ESTIMASI BANGUNAN: ±${luasBangunan} m²</text>
+          <text x="600" y="65" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">SKALA: 1 : 100</text>
+          <text x="600" y="82" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">LUAS TANAH: ${luasTanah} m² (${widthM}x${lengthM} m)</text>
+          <text x="600" y="99" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">ESTIMASI BANGUNAN: ±${luasBangunan} m²</text>
 
           <!-- Arah Mata Angin (Kompas Utara) -->
           <g transform="translate(520, 52)">
@@ -340,13 +349,22 @@ const FloorPlanEngine = {
         <rect x="25" y="25" width="750" height="1000" fill="none" stroke="#1E293B" stroke-width="2.5"/>
         <rect x="30" y="30" width="740" height="990" fill="none" stroke="#64748B" stroke-width="1"/>
 
-        <!-- HEADER -->
+        <!-- HEADER KOP GAMBAR STUDIO LENTERA - LANTAI 2 -->
         <g id="title-block-header-2">
-          <text x="50" y="65" font-family="Georgia, serif" font-size="22" font-weight="700" fill="#1E293B">RUMAH MASA DEPAN</text>
-          <text x="50" y="86" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#3E5C50">SKEMA PEMBAGIAN RUANG & DENAH LAYAK HUNI • LANTAI 2</text>
-          <text x="600" y="65" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">SKALA: 1 : 100</text>
-          <text x="600" y="82" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">LUAS TANAH: ${luasTanah} m²</text>
-          <text x="600" y="99" font-family="system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">ESTIMASI TOTAL: ±${luasBangunan} m²</text>
+          <!-- Logo Studio Lentera Mark -->
+          <g transform="translate(48, 44) scale(0.36)">
+            <path d="M 28 8 L 82 8 L 104 68 L 74 100 L 74 132 L 96 150 L 14 150 L 36 132 L 36 100 L 6 68 Z" fill="none" stroke="#914C35" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+            <path d="M 38 100 L 55 80 L 72 100" fill="none" stroke="#914C35" stroke-width="11" stroke-linejoin="round"/>
+            <path d="M 50 148 L 50 128 A 5 5 0 0 1 60 128 L 60 148" fill="none" stroke="#914C35" stroke-width="9"/>
+            <path d="M 44 26 L 66 26 L 76 68 L 55 92 L 34 68 Z" fill="none" stroke="#914C35" stroke-width="10" stroke-linejoin="round"/>
+          </g>
+          
+          <text x="96" y="58" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#914C35">STUDIO LENTERA • ARSITEKTUR &amp; PERENCANAAN</text>
+          <text x="96" y="80" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="20" font-weight="800" fill="#1E293B">RUMAH MASA DEPAN</text>
+          <text x="96" y="98" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#35653E">SKEMA PEMBAGIAN RUANG &amp; DENAH LAYAK HUNI • LANTAI 2</text>
+          <text x="600" y="65" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">SKALA: 1 : 100</text>
+          <text x="600" y="82" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">LUAS TANAH: ${luasTanah} m²</text>
+          <text x="600" y="99" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">ESTIMASI TOTAL: ±${luasBangunan} m²</text>
           <line x1="30" y1="112" x2="770" y2="112" stroke="#1E293B" stroke-width="1.5"/>
         </g>
 

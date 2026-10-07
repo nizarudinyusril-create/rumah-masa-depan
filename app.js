@@ -991,10 +991,86 @@
   }
 
   function handleDownloadFloorPlanPdf() {
-    showToast('Membuka dialog cetak... Pilih "Simpan sebagai PDF" untuk mengunduh.');
-    setTimeout(() => {
+    if (!currentFloorParams) {
       window.print();
-    }, 400);
+      return;
+    }
+    const svgContent = FloorPlanEngine.generateFloorPlanSvg(currentFloorParams, currentFloorLevel);
+    showToast('Menyiapkan lembar denah arsitektur PDF...');
+    printFloorPlanOnly(svgContent, `Denah-Arsitektur-Lantai-${currentFloorLevel}-Studio-Lentera`);
+  }
+
+  function printFloorPlanOnly(svgMarkup, title) {
+    const printFrame = document.createElement('iframe');
+    printFrame.style.position = 'fixed';
+    printFrame.style.right = '0';
+    printFrame.style.bottom = '0';
+    printFrame.style.width = '0';
+    printFrame.style.height = '0';
+    printFrame.style.border = '0';
+    document.body.appendChild(printFrame);
+
+    try {
+      const doc = printFrame.contentWindow.document;
+      doc.open();
+      doc.write(`
+        <!DOCTYPE html>
+        <html lang="id">
+        <head>
+          <meta charset="UTF-8">
+          <title>${title || 'Denah Arsitektur Layak Huni - Studio Lentera'}</title>
+          <style>
+            @page {
+              size: A4 portrait;
+              margin: 6mm;
+            }
+            * { box-sizing: border-box; margin: 0; padding: 0; }
+            body {
+              font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+              background-color: #FFFFFF;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              min-height: 100vh;
+              padding: 0;
+            }
+            .blueprint-sheet {
+              width: 100%;
+              max-width: 195mm;
+              height: auto;
+              margin: 0 auto;
+            }
+            svg {
+              width: 100%;
+              height: auto;
+              display: block;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="blueprint-sheet">
+            ${svgMarkup}
+          </div>
+        </body>
+        </html>
+      `);
+      doc.close();
+
+      setTimeout(() => {
+        try {
+          printFrame.contentWindow.focus();
+          printFrame.contentWindow.print();
+        } catch (err) {
+          window.print();
+        }
+        setTimeout(() => {
+          if (printFrame.parentNode) printFrame.parentNode.removeChild(printFrame);
+        }, 15000);
+      }, 350);
+    } catch (e) {
+      window.print();
+    }
   }
 
   // --- ACTIONS (COPY, PDF, WHATSAPP, SHARE LINK) ---
@@ -1233,8 +1309,55 @@
     }
   }
 
+  // --- THEME MANAGEMENT (MODE SIANG / MALAM) ---
+  function applyTheme(theme) {
+    const isDark = theme === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    
+    const iconEl = document.getElementById('theme-icon');
+    const textEl = document.getElementById('theme-text');
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+    if (iconEl) iconEl.textContent = isDark ? '☀️' : '🌙';
+    if (textEl) textEl.textContent = isDark ? 'Siang' : 'Malam';
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute('content', isDark ? '#121413' : '#FFFFFF');
+    }
+  }
+
+  function setupThemeToggle() {
+    let savedTheme = null;
+    try {
+      savedTheme = localStorage.getItem('hvb_theme');
+    } catch (e) {}
+
+    if (!savedTheme) {
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        savedTheme = 'dark';
+      } else {
+        savedTheme = 'light';
+      }
+    }
+
+    applyTheme(savedTheme);
+
+    const toggleBtn = document.getElementById('btn-theme-toggle');
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        applyTheme(nextTheme);
+        try {
+          localStorage.setItem('hvb_theme', nextTheme);
+        } catch (e) {}
+        showToast(nextTheme === 'dark' ? 'Mode Malam aktif 🌙' : 'Mode Siang aktif ☀️');
+      });
+    }
+  }
+
   // --- INITIALIZATION ---
   function init() {
+    setupThemeToggle();
     loadStateFromStorage();
     renderQuestions();
 

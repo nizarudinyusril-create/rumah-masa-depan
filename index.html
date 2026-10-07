@@ -20,9 +20,12 @@
   <meta name="twitter:title" content="RUMAH MASA DEPAN — Temukan Gambaran & Denah Rumah Impianmu" />
   <meta name="twitter:description" content="Eksplorasi gaya arsitektur dan denah pembagian ruang layak huni gratis langsung di browser." />
   <meta name="twitter:image" content="icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
   <link rel="manifest" href="manifest.webmanifest" />
-  <link rel="icon" type="image/svg+xml" href="icon.svg" />
-  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="icon" type="image/svg+xml" href="assets/icon-lentera.svg" />
+  <link rel="apple-touch-icon" href="assets/icon-lentera.svg" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -37,11 +40,19 @@
   <header class="app-header" role="banner">
     <div class="header-container">
       <div class="header-row">
-        <a href="#hero" class="brand-title font-serif">
-          <img src="icon.svg" alt="" class="brand-icon" width="26" height="26" aria-hidden="true" />
-          <span>RUMAH MASA DEPAN</span>
+        <a href="#hero" class="brand-title">
+          <img src="assets/icon-lentera.svg" alt="Studio Lentera" class="brand-lentera-icon" width="24" height="32" aria-hidden="true" />
+          <div class="brand-text-col">
+            <span class="brand-studio-tag">STUDIO LENTERA</span>
+            <span class="brand-app-name">RUMAH MASA DEPAN</span>
+          </div>
         </a>
         <div class="header-actions">
+          <!-- Tombol Ganti Mode Siang / Malam -->
+          <button type="button" class="btn-header-ghost btn-theme-toggle" id="btn-theme-toggle" aria-label="Ganti mode terang atau gelap" title="Ganti Mode Siang / Malam">
+            <span class="theme-icon" id="theme-icon">🌙</span>
+            <span class="theme-text hide-on-ultranarrow" id="theme-text">Malam</span>
+          </button>
           <button type="button" class="btn-header-ghost btn-share-action" id="btn-header-share" title="Bagikan link aplikasi ini">
             🔗 <span class="hide-on-ultranarrow">Bagikan</span>
           </button>
@@ -68,9 +79,12 @@
     
     <!-- Hero Section -->
     <section class="hero-section" id="hero">
-      <div class="hero-badge-wrap">
-        <span class="hero-eyebrow">Alat eksplorasi desain rumah — gratis, tanpa perlu jadi ahli</span>
-        <span class="device-pill">🌐 Browser • Semua Perangkat</span>
+      <div class="hero-brand-card">
+        <img src="assets/logo-studio-lentera.svg" alt="Studio Lentera" class="hero-studio-logo" width="180" height="60" />
+        <div class="hero-badge-wrap">
+          <span class="hero-eyebrow">ARSITEKTUR &amp; PERENCANAAN HUNIAN</span>
+          <span class="device-pill">🌐 Browser • Semua Perangkat</span>
+        </div>
       </div>
       <h1 class="hero-title font-serif">
         Rumah impianmu itu <em>sudah ada</em> di kepalamu. Ayo kita gambar bersama.
@@ -124,9 +138,24 @@
   <!-- Footer -->
   <footer class="app-footer" role="contentinfo">
     <div class="footer-container">
+      <div class="footer-brand-wrap">
+        <img src="assets/icon-lentera.svg" alt="Studio Lentera" class="footer-logo" width="30" height="40" />
+        <div class="footer-brand-text">
+          <span class="footer-studio-title">STUDIO LENTERA</span>
+          <span class="footer-studio-sub">Arsitektur, Desain Interior & Perencanaan Hunian</span>
+        </div>
+      </div>
       <p class="footer-text">
-        Dibuat untuk membantumu berpikir jernih sebelum membangun rumah. Hasilnya bisa kamu simpan atau diskusikan lebih lanjut dengan siapa pun.
+        Dibuat untuk membantumu menemukan karakter arsitektur dan pembagian ruang yang tepat sebelum membangun rumah. Konsultasikan konsep dan denahmu langsung dengan tim arsitek profesional Studio Lentera.
       </p>
+      <div class="footer-contact-row">
+        <a href="https://wa.me/6282229540204" target="_blank" rel="noopener noreferrer" class="footer-wa-link">
+          💬 WhatsApp Konsultasi: +62 822-2954-0204
+        </a>
+      </div>
+      <div class="footer-credit">
+        © 2025 Studio Lentera. Seluruh hak cipta dilindungi.
+      </div>
     </div>
   </footer>
 
