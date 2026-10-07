@@ -871,6 +871,9 @@
       briefBox.innerHTML = paragraphs.map(p => `<p>${p}</p>`).join('');
     }
 
+    // 4. Render Denah Arsitektural Layak Huni
+    renderFloorPlanToModal(1);
+
     // Tampilkan modal
     modal.classList.add('active');
     document.body.classList.add('modal-open');
@@ -889,6 +892,109 @@
 
     const genBtn = document.getElementById('btn-generate');
     if (genBtn) genBtn.focus();
+  }
+
+  // --- FLOOR PLAN STATE & ENGINE HANDLERS ---
+  let currentFloorParams = null;
+  let currentFloorLevel = 1;
+  let zoomLevel = 1.0;
+
+  function renderFloorPlanToModal(level = 1) {
+    if (typeof FloorPlanEngine === 'undefined') return;
+    currentFloorLevel = level;
+    currentFloorParams = FloorPlanEngine.analyzeRequirements(appState.answers, appState.landSize, appState.extraNotes);
+
+    const container = document.getElementById('floorplan-canvas-container');
+    if (container) {
+      const svgHtml = FloorPlanEngine.generateFloorPlanSvg(currentFloorParams, currentFloorLevel);
+      container.innerHTML = svgHtml;
+    }
+
+    const tabsWrap = document.getElementById('floor-tabs-wrap');
+    if (tabsWrap) {
+      if (currentFloorParams.isTwoStories) {
+        tabsWrap.style.display = 'flex';
+        const tab1 = document.getElementById('btn-tab-floor-1');
+        const tab2 = document.getElementById('btn-tab-floor-2');
+        if (tab1) tab1.className = `btn-floor-tab ${currentFloorLevel === 1 ? 'active' : ''}`;
+        if (tab2) tab2.className = `btn-floor-tab ${currentFloorLevel === 2 ? 'active' : ''}`;
+      } else {
+        tabsWrap.style.display = 'none';
+      }
+    }
+
+    // Update WhatsApp link for Studio Lentera consultation
+    const lenteraWaBtn = document.getElementById('btn-lentera-consult-wa');
+    if (lenteraWaBtn) {
+      const topStyleName = (recommendationResult && recommendationResult.top3 && recommendationResult.top3[0])
+        ? recommendationResult.top3[0].label
+        : 'Modern';
+      const msg = `Halo Studio Lentera, saya telah mengisi form eksplorasi di Rumah Masa Depan dan mendapatkan rekomendasi gaya ${topStyleName} serta skema denah pembagian ruang untuk lahan ${currentFloorParams.widthM}x${currentFloorParams.lengthM} m.\n\nAlangkah baiknya saya ingin berkonsultasi lebih lanjut dengan Studio Lentera untuk membuat denah yang lebih profesional, perhitungan struktur, dan gambar kerja teknis.`;
+      lenteraWaBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    }
+  }
+
+  function openFloorPlanZoomModal() {
+    const modal = document.getElementById('floorplan-zoom-modal');
+    const zoomContainer = document.getElementById('zoom-content-wrapper');
+    const zoomTitle = document.getElementById('zoom-title');
+    if (!modal || !zoomContainer || !currentFloorParams) return;
+
+    zoomLevel = 1.0;
+    const svgHtml = FloorPlanEngine.generateFloorPlanSvg(currentFloorParams, currentFloorLevel);
+    zoomContainer.innerHTML = svgHtml;
+    zoomContainer.style.transform = `scale(1.0)`;
+
+    if (zoomTitle) {
+      zoomTitle.textContent = `Denah Arsitektur Layak Huni — Lantai ${currentFloorLevel}`;
+    }
+
+    modal.classList.add('active');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeFloorPlanZoomModal() {
+    const modal = document.getElementById('floorplan-zoom-modal');
+    if (modal) {
+      modal.classList.remove('active');
+      const mainModal = document.getElementById('results-modal');
+      if (!mainModal || !mainModal.classList.contains('active')) {
+        document.body.classList.remove('modal-open');
+      }
+    }
+  }
+
+  function handleZoom(delta) {
+    const zoomContainer = document.getElementById('zoom-content-wrapper');
+    if (!zoomContainer) return;
+    if (delta === 0) {
+      zoomLevel = 1.0;
+    } else {
+      zoomLevel = Math.min(2.5, Math.max(0.6, Math.round((zoomLevel + delta) * 10) / 10));
+    }
+    zoomContainer.style.transform = `scale(${zoomLevel})`;
+  }
+
+  function handleDownloadFloorPlanSvg() {
+    if (!currentFloorParams) return;
+    const svgContent = FloorPlanEngine.generateFloorPlanSvg(currentFloorParams, currentFloorLevel);
+    const blob = new Blob([svgContent], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `denah-arsitektur-lantai-${currentFloorLevel}.svg`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    showToast(`Denah Lantai ${currentFloorLevel} berhasil diunduh (vektor SVG) ✓`);
+  }
+
+  function handleDownloadFloorPlanPdf() {
+    showToast('Membuka dialog cetak... Pilih "Simpan sebagai PDF" untuk mengunduh.');
+    setTimeout(() => {
+      window.print();
+    }, 400);
   }
 
   // --- ACTIONS (COPY, PDF, WHATSAPP, SHARE LINK) ---
@@ -1169,6 +1275,44 @@
 
     const modalShareBtn = document.getElementById('btn-modal-share');
     if (modalShareBtn) modalShareBtn.addEventListener('click', () => handleShareApp(true));
+
+    // Floor Plan Tabs & Action Buttons
+    const tabFloor1 = document.getElementById('btn-tab-floor-1');
+    if (tabFloor1) tabFloor1.addEventListener('click', () => renderFloorPlanToModal(1));
+
+    const tabFloor2 = document.getElementById('btn-tab-floor-2');
+    if (tabFloor2) tabFloor2.addEventListener('click', () => renderFloorPlanToModal(2));
+
+    const viewZoomBtn = document.getElementById('btn-view-floorplan-zoom');
+    if (viewZoomBtn) viewZoomBtn.addEventListener('click', openFloorPlanZoomModal);
+
+    const closeZoomBtn = document.getElementById('btn-close-zoom');
+    if (closeZoomBtn) closeZoomBtn.addEventListener('click', closeFloorPlanZoomModal);
+
+    const zoomInBtn = document.getElementById('btn-zoom-in');
+    if (zoomInBtn) zoomInBtn.addEventListener('click', () => handleZoom(0.2));
+
+    const zoomOutBtn = document.getElementById('btn-zoom-out');
+    if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => handleZoom(-0.2));
+
+    const zoomResetBtn = document.getElementById('btn-zoom-reset');
+    if (zoomResetBtn) zoomResetBtn.addEventListener('click', () => handleZoom(0));
+
+    const dlSvgBtn = document.getElementById('btn-download-floorplan-svg');
+    if (dlSvgBtn) dlSvgBtn.addEventListener('click', handleDownloadFloorPlanSvg);
+
+    const dlPdfBtn = document.getElementById('btn-download-floorplan-pdf');
+    if (dlPdfBtn) dlPdfBtn.addEventListener('click', handleDownloadFloorPlanPdf);
+
+    const dlZoomPdfBtn = document.getElementById('btn-zoom-download-pdf');
+    if (dlZoomPdfBtn) dlZoomPdfBtn.addEventListener('click', handleDownloadFloorPlanPdf);
+
+    const zoomOverlay = document.getElementById('floorplan-zoom-modal');
+    if (zoomOverlay) {
+      zoomOverlay.addEventListener('click', (e) => {
+        if (e.target === zoomOverlay) closeFloorPlanZoomModal();
+      });
+    }
 
     // Reset & Backup
     const resetBtn = document.getElementById('btn-reset');

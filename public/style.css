@@ -1175,6 +1175,271 @@ button {
   line-height: 1.6;
 }
 
+/* --- SECTION DENAH ARSITEKTUR LAYAK HUNI --- */
+.floorplan-result-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.floorplan-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.floorplan-subtitle {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  max-width: 620px;
+}
+
+.floor-tabs-wrap {
+  display: flex;
+  gap: 6px;
+  background-color: var(--paper);
+  padding: 4px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+}
+
+.btn-floor-tab {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: var(--radius-full);
+  color: var(--ink-muted);
+  transition: all var(--transition-fast);
+}
+
+.btn-floor-tab.active {
+  background-color: var(--pine);
+  color: #FFFFFF;
+}
+
+.floorplan-display-card {
+  background-color: #FFFFFF;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.floorplan-canvas-container {
+  width: 100%;
+  max-height: 580px;
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: #FAFAFA;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+}
+
+.cad-floorplan-svg {
+  width: 100%;
+  max-width: 680px;
+  height: auto;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.08);
+  border-radius: 4px;
+  display: block;
+}
+
+.floorplan-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.btn-cad-action {
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--border);
+  background-color: #FFFFFF;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-fast);
+}
+
+.btn-cad-action:hover {
+  background-color: var(--paper);
+  border-color: var(--pine);
+  color: var(--pine);
+}
+
+.btn-cad-primary {
+  background-color: var(--pine);
+  border-color: var(--pine);
+  color: #FFFFFF;
+}
+
+.btn-cad-primary:hover {
+  background-color: var(--pine-dark);
+  border-color: var(--pine-dark);
+  color: #FFFFFF;
+}
+
+/* Studio Lentera Consultation Callout */
+.studio-lentera-callout {
+  background: linear-gradient(135deg, #FEF9C3 0%, #FEF3C7 100%);
+  border: 2px solid var(--ochre);
+  border-radius: var(--radius-md);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 14px rgba(232, 163, 61, 0.15);
+}
+
+.callout-badge {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #92400E;
+  background-color: #FDE68A;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.callout-text {
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: #78350F;
+}
+
+.callout-text strong {
+  color: #92400E;
+}
+
+.callout-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-lentera-wa {
+  background-color: #25D366;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 20px;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 3px 10px rgba(37, 211, 102, 0.3);
+  transition: all var(--transition-fast);
+}
+
+.btn-lentera-wa:hover {
+  background-color: #1EBE5D;
+  transform: translateY(-1px);
+}
+
+/* Fullscreen Zoom Preview Modal for Floor Plan */
+.floorplan-zoom-overlay {
+  z-index: 120;
+}
+
+.floorplan-zoom-card {
+  background-color: #FFFFFF;
+  width: 95vw;
+  max-width: 1000px;
+  height: 90vh;
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.zoom-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #F8FAFC;
+}
+
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-zoom-tool {
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background-color: #FFFFFF;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.btn-zoom-tool:hover {
+  background-color: var(--paper);
+  border-color: var(--pine);
+}
+
+.zoom-body {
+  flex: 1;
+  overflow: auto;
+  padding: 20px;
+  background-color: #F1F5F9;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.zoom-content-wrapper {
+  transform-origin: top center;
+  transition: transform 0.2s ease-out;
+  display: flex;
+  justify-content: center;
+}
+
+.zoom-content-wrapper .cad-floorplan-svg {
+  max-width: 780px;
+  width: 100%;
+}
+
+.zoom-footer {
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background-color: #FFFFFF;
+}
+
 /* PRINT MEDIA QUERY (Simpan sebagai PDF) */
 @media print {
   /* Sembunyikan semua elemen kecuali modal print area */
@@ -1194,8 +1459,11 @@ button {
   .app-footer,
   .modal-close-btn,
   .modal-actions,
+  .floorplan-toolbar,
+  .callout-actions,
   .install-banner,
-  .toast-container {
+  .toast-container,
+  .floorplan-zoom-overlay {
     display: none !important;
   }
 
@@ -1229,9 +1497,28 @@ button {
 
   .top-style-card,
   .summary-card,
-  .narrative-brief-box {
+  .narrative-brief-box,
+  .floorplan-display-card,
+  .studio-lentera-callout {
     border: 1px solid #CCCCCC !important;
     break-inside: avoid;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+
+  .floorplan-canvas-container {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+  }
+
+  .cad-floorplan-svg {
+    max-width: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    page-break-before: always;
   }
 
   .print-tip {

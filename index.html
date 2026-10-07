@@ -7,18 +7,18 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Vision Builder" />
-  <title>House Vision Builder — Temukan Gambaran Rumah Impianmu</title>
-  <meta name="description" content="Alat gratis untuk menemukan gambaran rumah impianmu, hanya 3–5 menit. Tanpa login, tanpa aplikasi, langsung di browser." />
-  <meta property="og:title" content="House Vision Builder — Temukan Gambaran Rumah Impianmu" />
-  <meta property="og:description" content="Alat eksplorasi gratis menemukan gaya arsitektur rumah yang cocok untukmu sebelum konsultasi arsitek. 100% gratis berbasis browser." />
+  <meta name="apple-mobile-web-app-title" content="Rumah Masa Depan" />
+  <title>RUMAH MASA DEPAN — Temukan Gambaran & Denah Rumah Impianmu</title>
+  <meta name="description" content="Alat gratis untuk menemukan gambaran dan denah rumah impianmu berstandar layak huni, hanya 3–5 menit. Tanpa login, langsung di browser." />
+  <meta property="og:title" content="RUMAH MASA DEPAN — Temukan Gambaran & Denah Rumah Impianmu" />
+  <meta property="og:description" content="Eksplorasi gaya arsitektur dan denah 2D pembagian ruang layak huni sebelum konsultasi ke Studio Lentera." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="id_ID" />
-  <meta property="og:site_name" content="House Vision Builder" />
+  <meta property="og:site_name" content="RUMAH MASA DEPAN" />
   <meta property="og:image" content="icon.svg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="House Vision Builder — Temukan Gambaran Rumah Impianmu" />
-  <meta name="twitter:description" content="Alat eksplorasi gratis menemukan gaya arsitektur rumah idamanmu langsung di browser." />
+  <meta name="twitter:title" content="RUMAH MASA DEPAN — Temukan Gambaran & Denah Rumah Impianmu" />
+  <meta name="twitter:description" content="Eksplorasi gaya arsitektur dan denah pembagian ruang layak huni gratis langsung di browser." />
   <meta name="twitter:image" content="icon.svg" />
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" type="image/svg+xml" href="icon.svg" />
@@ -39,7 +39,7 @@
       <div class="header-row">
         <a href="#hero" class="brand-title font-serif">
           <img src="icon.svg" alt="" class="brand-icon" width="26" height="26" aria-hidden="true" />
-          <span>House Vision Builder</span>
+          <span>RUMAH MASA DEPAN</span>
         </a>
         <div class="header-actions">
           <button type="button" class="btn-header-ghost btn-share-action" id="btn-header-share" title="Bagikan link aplikasi ini">
@@ -167,6 +167,55 @@
           <div class="narrative-brief-box" id="narrative-brief-box"></div>
         </section>
 
+        <!-- Section 4: Pembagian Ruang & Denah Layak Huni -->
+        <section class="floorplan-result-section">
+          <div class="floorplan-header-row">
+            <div>
+              <h3 class="modal-section-title font-serif">📐 Pembagian Ruang & Denah Layak Huni</h3>
+              <p class="floorplan-subtitle">
+                Denah 2D cerdas berdasarkan kebutuhan ruangmu, memenuhi standar pencahayaan alami dan ventilasi silang (SNI 03-1733).
+              </p>
+            </div>
+            <!-- Switcher Lantai 1 / Lantai 2 (Muncul jika 2 lantai) -->
+            <div class="floor-tabs-wrap" id="floor-tabs-wrap" style="display:none;">
+              <button type="button" class="btn-floor-tab active" id="btn-tab-floor-1" data-floor="1">Lantai 1</button>
+              <button type="button" class="btn-floor-tab" id="btn-tab-floor-2" data-floor="2">Lantai 2</button>
+            </div>
+          </div>
+
+          <!-- Preview Area Denah SVG -->
+          <div class="floorplan-display-card">
+            <div class="floorplan-canvas-container" id="floorplan-canvas-container">
+              <!-- SVG Denah diinjeksi secara dinamis -->
+            </div>
+            <!-- Action Toolbar Khusus Denah -->
+            <div class="floorplan-toolbar">
+              <button type="button" class="btn-cad-action" id="btn-view-floorplan-zoom">
+                🔍 Lihat Denah Sementara
+              </button>
+              <button type="button" class="btn-cad-action" id="btn-download-floorplan-svg">
+                📥 Unduh Denah (SVG)
+              </button>
+              <button type="button" class="btn-cad-action btn-cad-primary" id="btn-download-floorplan-pdf">
+                📄 Unduh Denah (PDF / Cetak)
+              </button>
+            </div>
+          </div>
+
+          <!-- Catatan Konsultasi Wajib Studio Lentera -->
+          <div class="studio-lentera-callout">
+            <div class="callout-badge">SARAN ARSITEK RESMI</div>
+            <p class="callout-text font-serif">
+              "Alangkah baiknya denah ini dikonsultasikan kepada <strong>Studio Lentera</strong> untuk membuat yang lebih profesional, perhitungan struktur, analisa tapak, dan gambar kerja teknis."
+            </p>
+            <div class="callout-actions">
+              <a href="https://wa.me/6282229540204" target="_blank" rel="noopener noreferrer" class="btn-lentera-wa" id="btn-lentera-consult-wa">
+                💬 Konsultasikan Denah Ini ke Studio Lentera
+              </a>
+            </div>
+          </div>
+        </section>
+
       </div>
 
       <!-- Modal Actions Footer -->
@@ -189,12 +238,41 @@
     </div>
   </div>
 
+  <!-- Modal Zoom / Lihat Sementara Denah -->
+  <div class="modal-overlay floorplan-zoom-overlay" id="floorplan-zoom-modal" role="dialog" aria-modal="true" aria-label="Lihat Denah Sementara">
+    <div class="floorplan-zoom-card">
+      <div class="zoom-header">
+        <span class="font-serif" style="font-weight:700; color:var(--ink);" id="zoom-title">Denah Arsitektur Layak Huni</span>
+        <div class="zoom-controls">
+          <button type="button" class="btn-zoom-tool" id="btn-zoom-in" title="Perbesar">+</button>
+          <button type="button" class="btn-zoom-tool" id="btn-zoom-out" title="Perkecil">−</button>
+          <button type="button" class="btn-zoom-tool" id="btn-zoom-reset" title="Ukuran Awal">100%</button>
+          <button type="button" class="modal-close-btn" id="btn-close-zoom" aria-label="Tutup pratinjau">✕</button>
+        </div>
+      </div>
+      <div class="zoom-body" id="zoom-body">
+        <div class="zoom-content-wrapper" id="zoom-content-wrapper">
+          <!-- Duplikat SVG Denah dimasukkan di sini untuk di-zoom/pan -->
+        </div>
+      </div>
+      <div class="zoom-footer">
+        <p style="font-size:0.85rem; color:var(--ink-muted);">
+          Alangkah baiknya denah ini dikonsultasikan kepada <strong>Studio Lentera</strong> untuk penyesuaian detail lapangan.
+        </p>
+        <button type="button" class="btn-primary" id="btn-zoom-download-pdf">
+          📄 Unduh Lembar Denah PDF
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container" aria-live="polite"></div>
 
   <!-- Classical Scripts Loaded Sequentially -->
   <script src="config.js"></script>
   <script src="art.js"></script>
+  <script src="floorplan.js"></script>
   <script src="app.js"></script>
 </body>
 </html>

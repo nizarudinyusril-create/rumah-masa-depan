@@ -4,10 +4,11 @@
  */
 
 const APP_CONFIG = {
-  appName: "House Vision Builder",
+  appName: "Rumah Masa Depan",
   tagline: "Temukan gambaran rumah impianmu, 3–5 menit saja.",
   estimatedMinutes: "3–5 menit",
-  whatsappEnabled: true
+  whatsappEnabled: true,
+  consultantName: "Studio Lentera"
 };
 
 const WHATSAPP_NUMBER = "6282229540204";
