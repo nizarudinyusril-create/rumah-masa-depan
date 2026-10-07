@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#3E5C50" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Vision Builder" />
+  <title>House Vision Builder — Temukan Gambaran Rumah Impianmu</title>
+  <meta name="description" content="Alat gratis untuk menemukan gambaran rumah impianmu, hanya 3–5 menit. Tanpa login, tanpa aplikasi, langsung di browser." />
+  <meta property="og:title" content="House Vision Builder — Temukan Gambaran Rumah Impianmu" />
+  <meta property="og:description" content="Alat eksplorasi gratis menemukan gaya arsitektur rumah yang cocok untukmu sebelum konsultasi arsitek. 100% gratis berbasis browser." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="id_ID" />
+  <meta property="og:site_name" content="House Vision Builder" />
+  <meta property="og:image" content="icon.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="House Vision Builder — Temukan Gambaran Rumah Impianmu" />
+  <meta name="twitter:description" content="Alat eksplorasi gratis menemukan gaya arsitektur rumah idamanmu langsung di browser." />
+  <meta name="twitter:image" content="icon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" type="image/svg+xml" href="icon.svg" />
+  <link rel="apple-touch-icon" href="icon.svg" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- PWA Install Banner -->
+  <div class="install-banner" id="install-banner" role="banner">
+    <span>Pasang aplikasi ini di layar utama HP atau komputermu untuk akses cepat!</span>
+    <button type="button" class="btn-install" id="btn-pwa-install">Pasang ke layar utama</button>
+  </div>
+
+  <!-- Sticky Header -->
+  <header class="app-header" role="banner">
+    <div class="header-container">
+      <div class="header-row">
+        <a href="#hero" class="brand-title font-serif">
+          <img src="icon.svg" alt="" class="brand-icon" width="26" height="26" aria-hidden="true" />
+          <span>House Vision Builder</span>
+        </a>
+        <div class="header-actions">
+          <button type="button" class="btn-header-ghost btn-share-action" id="btn-header-share" title="Bagikan link aplikasi ini">
+            🔗 <span class="hide-on-ultranarrow">Bagikan</span>
+          </button>
+          <button type="button" class="btn-header-ghost" id="btn-reset" title="Kosongkan semua pilihan dan mulai dari awal">
+            Mulai ulang
+          </button>
+        </div>
+      </div>
+      <!-- Progress Bar (10 Pertanyaan Utama) -->
+      <div class="progress-container" aria-live="polite">
+        <div class="progress-meta">
+          <span>Progres Eksplorasi</span>
+          <span id="progress-text">0 / 10 terjawab</span>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content" id="main-content" role="main">
+    
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+      <div class="hero-badge-wrap">
+        <span class="hero-eyebrow">Alat eksplorasi desain rumah — gratis, tanpa perlu jadi ahli</span>
+        <span class="device-pill">🌐 Browser • Semua Perangkat</span>
+      </div>
+      <h1 class="hero-title font-serif">
+        Rumah impianmu itu <em>sudah ada</em> di kepalamu. Ayo kita gambar bersama.
+      </h1>
+      <p class="hero-subtitle">
+        Jawab beberapa pertanyaan ringan, cukup dengan memilih gambar yang paling terasa "ini banget". Sekitar 3–5 menit, tanpa perlu mikir keras, langsung di browser tanpa login.
+      </p>
+      <div class="hero-actions">
+        <button type="button" class="btn-primary" id="btn-hero-scroll">
+          Mulai jelajahi ↓
+        </button>
+        <button type="button" class="btn-outline btn-share-action" id="btn-hero-share" title="Salin atau bagikan link aplikasi">
+          🔗 Bagikan Link ke Teman
+        </button>
+      </div>
+    </section>
+
+    <!-- 10 Questions Container -->
+    <div class="questions-list" id="questions-list">
+      <!-- 10 Questions rendered by app.js -->
+    </div>
+
+    <!-- Land Size Question (Opsional, di bawah pertanyaan 10) -->
+    <div id="land-size-container">
+      <!-- Rendered by app.js -->
+    </div>
+
+    <!-- Generate Action Bar -->
+    <section class="generate-bar">
+      <p class="generate-hint" id="generate-hint">
+        Tinggal 10 pertanyaan lagi untuk membuka hasil.
+      </p>
+      <button type="button" class="btn-primary btn-generate" id="btn-generate" disabled>
+        ✨ Generate Hasil
+      </button>
+
+      <!-- Secondary Controls: Backup File & Load -->
+      <div class="extra-controls">
+        <button type="button" class="btn-secondary" id="btn-save-file" title="Unduh file cadangan jawaban (.json)">
+          💾 Simpan jawaban ke file
+        </button>
+        <button type="button" class="btn-secondary" id="btn-load-file" title="Muat file cadangan jawaban (.json)">
+          📂 Muat dari file
+        </button>
+        <input type="file" id="file-input-load" accept=".json" style="display:none;" />
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="footer-container">
+      <p class="footer-text">
+        Dibuat untuk membantumu berpikir jernih sebelum membangun rumah. Hasilnya bisa kamu simpan atau diskusikan lebih lanjut dengan siapa pun.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Results Modal Overlay -->
+  <div class="modal-overlay" id="results-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-card">
+      
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div>
+          <span class="modal-eyebrow">Hasil Eksplorasimu</span>
+          <h2 class="modal-title font-serif" id="modal-title">Gambaran Rumah Impianmu</h2>
+        </div>
+        <button type="button" class="modal-close-btn" id="modal-close-btn" aria-label="Tutup jendela hasil">
+          ✕
+        </button>
+      </div>
+
+      <!-- Modal Body (Printable Area) -->
+      <div class="modal-body" id="modal-body">
+        
+        <!-- Section 1: Gaya yang Paling Cocok -->
+        <section>
+          <h3 class="modal-section-title font-serif">🏆 Gaya yang Paling Cocok</h3>
+          <div class="top-styles-list" id="top-styles-list"></div>
+          <div id="mismatch-note-wrap" style="margin-top:14px; display:none;"></div>
+        </section>
+
+        <!-- Section 2: Ringkasan Pilihan -->
+        <section>
+          <h3 class="modal-section-title font-serif">📋 Ringkasan Pilihan</h3>
+          <div class="summary-grid" id="summary-grid"></div>
+        </section>
+
+        <!-- Section 3: Brief Otomatis Naratif -->
+        <section>
+          <h3 class="modal-section-title font-serif">📝 Brief Arsitektur Otomatis</h3>
+          <div class="narrative-brief-box" id="narrative-brief-box"></div>
+        </section>
+
+      </div>
+
+      <!-- Modal Actions Footer -->
+      <div class="modal-actions">
+        <button type="button" class="btn-outline btn-modal-action" id="btn-copy-brief">
+          📋 Copy Brief
+        </button>
+        <button type="button" class="btn-outline btn-modal-action btn-share-action" id="btn-modal-share">
+          🔗 Bagikan Link
+        </button>
+        <button type="button" class="btn-outline btn-modal-action" id="btn-print-pdf">
+          🖨️ Simpan sebagai PDF
+        </button>
+        <button type="button" class="btn-modal-action btn-whatsapp" id="btn-whatsapp">
+          💬 Konsultasi ke Arsitek
+        </button>
+        <p class="print-tip">💡 Tips: Pilih opsi "Simpan sebagai PDF" di dialog cetak</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <!-- Classical Scripts Loaded Sequentially -->
+  <script src="config.js"></script>
+  <script src="art.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

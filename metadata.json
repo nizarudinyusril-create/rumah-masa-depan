@@ -1,0 +1,6 @@
+{
+  "name": "House Vision Builder",
+  "description": "Alat gratis untuk menemukan gambaran rumah impianmu, hanya 3–5 menit.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

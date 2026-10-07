@@ -1,0 +1,17 @@
+{
+  "name": "House Vision Builder",
+  "short_name": "Vision Builder",
+  "start_url": "./",
+  "display": "standalone",
+  "theme_color": "#3E5C50",
+  "background_color": "#F7F3EC",
+  "lang": "id",
+  "description": "Alat eksplorasi desain rumah impian sebelum berkonsultasi dengan arsitek.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="108" fill="#3E5C50"/>
+  <circle cx="256" cy="256" r="190" fill="#F7F3EC" opacity="0.08"/>
+  <!-- Roof -->
+  <polygon points="256,110 110,240 150,240 256,146 362,240 402,240" fill="#E8A33D"/>
+  <!-- Chimney -->
+  <rect x="330" y="150" width="36" height="60" rx="4" fill="#E8A33D"/>
+  <!-- House Base -->
+  <rect x="146" y="235" width="220" height="175" rx="8" fill="#F7F3EC"/>
+  <!-- Door with Arch -->
+  <path d="M226,410 V310 A30,30 0 0 1 286,310 V410 Z" fill="#3E5C50"/>
+  <!-- Door Knob -->
+  <circle cx="274" cy="360" r="4" fill="#E8A33D"/>
+  <!-- Window Left -->
+  <rect x="174" y="260" width="44" height="44" rx="6" fill="#3E5C50" opacity="0.85"/>
+  <line x1="196" y1="260" x2="196" y2="304" stroke="#F7F3EC" stroke-width="3"/>
+  <line x1="174" y1="282" x2="218" y2="282" stroke="#F7F3EC" stroke-width="3"/>
+  <!-- Window Right -->
+  <rect x="294" y="260" width="44" height="44" rx="6" fill="#3E5C50" opacity="0.85"/>
+  <line x1="316" y1="260" x2="316" y2="304" stroke="#F7F3EC" stroke-width="3"/>
+  <line x1="294" y1="282" x2="338" y2="282" stroke="#F7F3EC" stroke-width="3"/>
+  <!-- Sun / Vision Sparkle -->
+  <path d="M256,70 L260,86 L276,90 L260,94 L256,110 L252,94 L236,90 L252,86 Z" fill="#E8A33D"/>
+</svg>
