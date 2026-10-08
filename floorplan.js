@@ -8,8 +8,9 @@ const FloorPlanEngine = {
   /**
    * Menganalisis parameter lahan dan kebutuhan ruang pengguna
    */
-  analyzeRequirements(answers, landSizeText, extraNotes) {
+  analyzeRequirements(answers, landSizeText, extraNotes, clientName) {
     const rawLand = (landSizeText || '').toLowerCase();
+    const formattedClient = (clientName && clientName.trim()) ? clientName.trim() : 'Klien Studio Lentera';
     
     // Deteksi kebutuhan 2 lantai
     const isTwoStories = rawLand.includes('2 lantai') || 
@@ -50,6 +51,7 @@ const FloorPlanEngine = {
     const hasGarage = selectedRooms.includes('garasi');
 
     return {
+      clientName: formattedClient,
       widthM,
       lengthM,
       isTwoStories,
@@ -68,7 +70,7 @@ const FloorPlanEngine = {
    * Menghasilkan SVG Denah Arsitektural CAD Blueprint Lantai 1 & Lantai 2
    */
   generateFloorPlanSvg(params, floorLevel = 1) {
-    const { widthM, lengthM, isTwoStories, hasPool, hasStudy, hasWorship, hasGym, hasFoyer, hasGuestRoom, hasGarage } = params;
+    const { clientName, widthM, lengthM, isTwoStories, hasPool, hasStudy, hasWorship, hasGym, hasFoyer, hasGuestRoom, hasGarage } = params;
 
     // ViewBox: 800 x 1050 (Format Lembar Kerja Arsitektur Vertikal)
     const svgW = 800;
@@ -85,17 +87,18 @@ const FloorPlanEngine = {
     const luasBangunan = Math.round(isTwoStories ? luasTanah * 1.25 : luasTanah * 0.65);
 
     if (floorLevel === 2 && isTwoStories) {
-      return this.renderSecondFloorSvg({ svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasStudy, hasGym });
+      return this.renderSecondFloorSvg({ clientName, svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasStudy, hasGym });
     }
 
-    return this.renderFirstFloorSvg({ svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasPool, hasStudy, hasWorship, hasFoyer, hasGuestRoom, hasGarage, isTwoStories });
+    return this.renderFirstFloorSvg({ clientName, svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasPool, hasStudy, hasWorship, hasFoyer, hasGuestRoom, hasGarage, isTwoStories });
   },
 
   /**
    * Render Denah Lantai 1 (Ground Floor)
    */
   renderFirstFloorSvg(opts) {
-    const { svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasPool, hasStudy, hasWorship, hasFoyer, hasGarage, isTwoStories } = opts;
+    const { clientName, svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasPool, hasStudy, hasWorship, hasFoyer, hasGarage, isTwoStories } = opts;
+    const clientLabel = (clientName && clientName.trim()) ? clientName.trim() : 'Klien Studio Lentera';
 
     return `
       <svg viewBox="0 0 ${svgW} ${svgH}" class="cad-floorplan-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Denah Arsitektur Lantai 1">
@@ -145,14 +148,15 @@ const FloorPlanEngine = {
             <path d="M 44 26 L 66 26 L 76 68 L 55 92 L 34 68 Z" fill="none" stroke="#914C35" stroke-width="10" stroke-linejoin="round"/>
           </g>
           
-          <text x="96" y="58" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#914C35">STUDIO LENTERA • ARSITEKTUR &amp; PERENCANAAN</text>
-          <text x="96" y="80" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="20" font-weight="800" fill="#1E293B">RUMAH MASA DEPAN</text>
-          <text x="96" y="98" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#35653E">SKEMA PEMBAGIAN RUANG &amp; DENAH LAYAK HUNI (SNI 03-1733)</text>
+          <text x="96" y="56" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#914C35">STUDIO LENTERA • ARSITEKTUR &amp; PERENCANAAN</text>
+          <text x="96" y="78" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="18" font-weight="800" fill="#1E293B">RUMAH IMPIAN ${clientLabel.toUpperCase()}</text>
+          <text x="96" y="98" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#35653E">PRADESAUN KONSEPTUAL &amp; ZONASI LAYAK HUNI (SNI 03-1733)</text>
           
           <!-- Indikator Skala & Tanggal -->
-          <text x="600" y="65" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">SKALA: 1 : 100</text>
-          <text x="600" y="82" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">LUAS TANAH: ${luasTanah} m² (${widthM}x${lengthM} m)</text>
-          <text x="600" y="99" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">ESTIMASI BANGUNAN: ±${luasBangunan} m²</text>
+          <text x="590" y="58" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#914C35">KLIEN: ${clientLabel.toUpperCase()}</text>
+          <text x="590" y="74" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#64748B">SKALA: 1 : 100 • LANTAI 1</text>
+          <text x="590" y="89" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#64748B">LUAS LAHAN: ${luasTanah} m² (${widthM}x${lengthM} m)</text>
+          <text x="590" y="104" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#64748B">ESTIMASI TOTAL: ±${luasBangunan} m²</text>
 
           <!-- Arah Mata Angin (Kompas Utara) -->
           <g transform="translate(520, 52)">
@@ -310,15 +314,17 @@ const FloorPlanEngine = {
           <text x="600" y="928" font-family="system-ui" font-size="11" font-weight="700" fill="#3E5C50">LEMBAR: AR-01</text>
           
           <!-- Pesan Standar & Rekomendasi Konsultasi Studio Lentera -->
-          <text x="50" y="960" font-family="system-ui" font-size="10" font-weight="700" fill="#0F172A">STANDAR KELAYAKAN HUNIAN SEHAT:</text>
-          <text x="50" y="976" font-family="system-ui" font-size="9.5" fill="#475569">• Memenuhi rasio pencahayaan alami (min. 15% bukaan kaca) dan ventilasi silang (cross-ventilation).</text>
-          <text x="50" y="990" font-family="system-ui" font-size="9.5" fill="#475569">• Zonasi jelas: pemisahan area publik, semi-publik, privat, dan servis basah.</text>
+          <text x="50" y="958" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#0F172A">PRADESAUN &amp; STANDAR KELAYAKAN HUNIAN (SNI 03-1733):</text>
+          <text x="50" y="974" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" fill="#475569">• Memenuhi rasio pencahayaan alami (min. 15% bukaan) dan ventilasi silang (cross-ventilation).</text>
+          <text x="50" y="988" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" fill="#475569">• Zonasi ruang terencana: privat, semi-publik, servis, dan resapan air RTH.</text>
+          <text x="50" y="1002" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#914C35">⚠️ Sketsa Konseptual awal. Analisis tapak riil, kontur, &amp; struktur memerlukan arsitek Studio Lentera.</text>
           
           <!-- Rekomendasi Wajib Konsultasi Studio Lentera -->
-          <rect x="420" y="948" width="340" height="58" rx="6" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
-          <text x="432" y="966" font-family="system-ui" font-size="9.5" font-weight="700" fill="#92400E">CATATAN PENTING STUDIO LENTERA:</text>
-          <text x="432" y="982" font-family="system-ui" font-size="9" fill="#78350F">Alangkah baiknya denah ini dikonsultasikan kepada Studio Lentera</text>
-          <text x="432" y="996" font-family="system-ui" font-size="9" font-weight="600" fill="#78350F">untuk membuat yang lebih profesional & detail gambar kerja PBG.</text>
+          <rect x="420" y="944" width="340" height="62" rx="6" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+          <text x="432" y="962" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#92400E">KONSULTASI RESMI STUDIO LENTERA:</text>
+          <text x="432" y="977" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.8" fill="#78350F">Alangkah baiknya denah ini dikonsultasikan kepada Studio Lentera</text>
+          <text x="432" y="990" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.8" font-weight="600" fill="#78350F">untuk membuat yang lebih profesional, gambar kerja PBG, &amp; 3D.</text>
+          <text x="432" y="1002" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#35653E">WhatsApp: +62 822-2954-0204</text>
         </g>
       </svg>
     `;
@@ -328,7 +334,8 @@ const FloorPlanEngine = {
    * Render Denah Lantai 2 (Upper Floor) jika bangunan 2 lantai
    */
   renderSecondFloorSvg(opts) {
-    const { svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasStudy, hasGym } = opts;
+    const { clientName, svgW, svgH, planX, planY, planW, planH, widthM, lengthM, luasTanah, luasBangunan, hasStudy, hasGym } = opts;
+    const clientLabel = (clientName && clientName.trim()) ? clientName.trim() : 'Klien Studio Lentera';
 
     return `
       <svg viewBox="0 0 ${svgW} ${svgH}" class="cad-floorplan-svg" xmlns="http://www.w3.org/2000/svg" aria-label="Denah Arsitektur Lantai 2">
@@ -359,12 +366,13 @@ const FloorPlanEngine = {
             <path d="M 44 26 L 66 26 L 76 68 L 55 92 L 34 68 Z" fill="none" stroke="#914C35" stroke-width="10" stroke-linejoin="round"/>
           </g>
           
-          <text x="96" y="58" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#914C35">STUDIO LENTERA • ARSITEKTUR &amp; PERENCANAAN</text>
-          <text x="96" y="80" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="20" font-weight="800" fill="#1E293B">RUMAH MASA DEPAN</text>
-          <text x="96" y="98" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#35653E">SKEMA PEMBAGIAN RUANG &amp; DENAH LAYAK HUNI • LANTAI 2</text>
-          <text x="600" y="65" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">SKALA: 1 : 100</text>
-          <text x="600" y="82" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">LUAS TANAH: ${luasTanah} m²</text>
-          <text x="600" y="99" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="600" fill="#64748B">ESTIMASI TOTAL: ±${luasBangunan} m²</text>
+          <text x="96" y="56" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#914C35">STUDIO LENTERA • ARSITEKTUR &amp; PERENCANAAN</text>
+          <text x="96" y="78" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="18" font-weight="800" fill="#1E293B">RUMAH IMPIAN ${clientLabel.toUpperCase()}</text>
+          <text x="96" y="98" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="600" fill="#35653E">PRADESAUN KONSEPTUAL &amp; DENAH LAYAK HUNI • LANTAI 2</text>
+          <text x="590" y="58" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#914C35">KLIEN: ${clientLabel.toUpperCase()}</text>
+          <text x="590" y="74" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#64748B">SKALA: 1 : 100 • LANTAI 2</text>
+          <text x="590" y="89" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#64748B">LUAS TANAH: ${luasTanah} m²</text>
+          <text x="590" y="104" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="600" fill="#64748B">ESTIMASI TOTAL: ±${luasBangunan} m²</text>
           <line x1="30" y1="112" x2="770" y2="112" stroke="#1E293B" stroke-width="1.5"/>
         </g>
 
@@ -417,13 +425,19 @@ const FloorPlanEngine = {
         <!-- FOOTER KOP -->
         <g id="title-block-footer-2">
           <rect x="30" y="900" width="740" height="115" fill="#F8FAFC" stroke="#1E293B" stroke-width="1.5"/>
-          <text x="50" y="928" font-family="Georgia, serif" font-size="15" font-weight="700" fill="#1E293B">DENAH LANTAI 2 (ATAS)</text>
-          <text x="600" y="928" font-family="system-ui" font-size="11" font-weight="700" fill="#3E5C50">LEMBAR: AR-02</text>
+          <text x="50" y="928" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="14" font-weight="700" fill="#1E293B">DENAH LANTAI 2 (LANTAI ATAS)</text>
+          <text x="600" y="928" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="11" font-weight="700" fill="#3E5C50">LEMBAR: AR-02</text>
+
+          <text x="50" y="958" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="10" font-weight="700" fill="#0F172A">PRADESAUN &amp; STRUKTUR BERTINGKAT:</text>
+          <text x="50" y="974" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" fill="#475569">• Memaksimalkan void vertikal, sirkulasi udara lantai atas, dan pencahayaan alami.</text>
+          <text x="50" y="988" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9" fill="#475569">• Pembagian kamar anak, ruang santai keluarga, dan balkon terencana.</text>
+          <text x="50" y="1002" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.5" font-weight="600" fill="#914C35">⚠️ Sketsa Konseptual. Struktur pelat lantai beton &amp; pembebanan wajib dihitung arsitek.</text>
           
-          <rect x="420" y="948" width="340" height="58" rx="6" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
-          <text x="432" y="966" font-family="system-ui" font-size="9.5" font-weight="700" fill="#92400E">CATATAN PENTING STUDIO LENTERA:</text>
-          <text x="432" y="982" font-family="system-ui" font-size="9" fill="#78350F">Alangkah baiknya denah ini dikonsultasikan kepada Studio Lentera</text>
-          <text x="432" y="996" font-family="system-ui" font-size="9" font-weight="600" fill="#78350F">untuk membuat yang lebih profesional & perhitungan struktur bertingkat.</text>
+          <rect x="420" y="944" width="340" height="62" rx="6" fill="#FEF3C7" stroke="#D97706" stroke-width="1"/>
+          <text x="432" y="962" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="9.5" font-weight="700" fill="#92400E">KONSULTASI RESMI STUDIO LENTERA:</text>
+          <text x="432" y="977" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.8" fill="#78350F">Alangkah baiknya denah ini dikonsultasikan kepada Studio Lentera</text>
+          <text x="432" y="990" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.8" font-weight="600" fill="#78350F">untuk membuat yang lebih profesional &amp; perhitungan struktur bertingkat.</text>
+          <text x="432" y="1002" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="8.5" font-weight="700" fill="#35653E">WhatsApp: +62 822-2954-0204</text>
         </g>
       </svg>
     `;

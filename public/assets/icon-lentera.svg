@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 160" width="120" height="160">
+  <g fill="none" stroke="#914C35" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Outer Lantern Hood & Frame -->
+    <path d="M 30 8 L 90 8 L 112 68 L 84 100 L 84 132 L 108 152 L 12 152 L 36 132 L 36 100 L 8 68 Z" stroke-width="12"/>
+    <!-- House Roof inside lantern -->
+    <path d="M 38 100 L 60 78 L 82 100" stroke-width="11"/>
+    <!-- Doorway arch in house -->
+    <path d="M 54 150 L 54 126 A 6 6 0 0 1 66 126 L 66 150" stroke-width="10"/>
+    <!-- Upper Flame/Chamber Chamber -->
+    <path d="M 48 24 L 72 24 L 84 66 L 60 90 L 36 66 Z" stroke-width="11"/>
+  </g>
+</svg>

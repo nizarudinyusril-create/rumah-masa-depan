@@ -411,6 +411,8 @@ const ArtEngine = {
 
   /**
    * Menghasilkan markup gambar/ilustrasi untuk kartu opsi
+   * Mengoptimalkan performa seluler dengan format WebP, loading="lazy", decoding="async",
+   * dan graceful fallback instan ke visual vektor SVG.
    */
   renderOptionVisual(option, questionId) {
     let fallbackSvg = "";
@@ -421,10 +423,13 @@ const ArtEngine = {
     }
 
     if (option.image) {
-      // Rendernya menyertakan fallback SVG jika file gambar di folder assets/ belum ada
+      const webpSrc = option.image.replace(/\.(jpg|jpeg|png)$/i, '.webp');
       return `
         <div class="card-media-wrapper">
-          <img src="${option.image}" alt="${option.label}" class="card-image" loading="lazy" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='block';" />
+          <picture>
+            <source srcset="${webpSrc}" type="image/webp" />
+            <img src="${option.image}" alt="${option.label}" class="card-image" loading="lazy" decoding="async" width="400" height="300" onerror="this.style.display='none'; const svg=this.closest('.card-media-wrapper').querySelector('.card-svg-container'); if(svg) svg.style.display='block';" />
+          </picture>
           <div class="card-svg-container" style="display:none;">
             ${fallbackSvg}
           </div>

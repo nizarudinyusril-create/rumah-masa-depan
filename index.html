@@ -30,17 +30,11 @@
 </head>
 <body>
 
-  <!-- PWA Install Banner -->
-  <div class="install-banner" id="install-banner" role="banner">
-    <span>Pasang aplikasi ini di layar utama HP atau komputermu untuk akses cepat!</span>
-    <button type="button" class="btn-install" id="btn-pwa-install">Pasang ke layar utama</button>
-  </div>
-
   <!-- Sticky Header -->
   <header class="app-header" role="banner">
     <div class="header-container">
       <div class="header-row">
-        <a href="#hero" class="brand-title">
+        <a href="#hero" class="brand-title" id="brand-header-link">
           <img src="assets/icon-lentera.svg" alt="Studio Lentera" class="brand-lentera-icon" width="24" height="32" aria-hidden="true" />
           <div class="brand-text-col">
             <span class="brand-studio-tag">STUDIO LENTERA</span>
@@ -62,14 +56,16 @@
         </div>
       </div>
       <!-- Progress Bar (10 Pertanyaan Utama) -->
-      <div class="progress-container" aria-live="polite">
+      <div class="progress-container" id="quiz-progress-wrap" aria-live="polite">
         <div class="progress-meta">
-          <span>Progres Eksplorasi</span>
-          <span id="progress-text">0 / 10 terjawab</span>
+          <span class="progress-step-title" id="progress-step-title">Eksplorasi Desain</span>
+          <span id="progress-text" class="progress-counter">0 / 10 terjawab</span>
         </div>
         <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0">
           <div class="progress-fill" id="progress-fill"></div>
         </div>
+        <!-- Mini Step Dots -->
+        <div class="progress-dots-row" id="progress-dots-row" aria-label="Navigasi nomor pertanyaan"></div>
       </div>
     </div>
   </header>
@@ -90,11 +86,11 @@
         Rumah impianmu itu <em>sudah ada</em> di kepalamu. Ayo kita gambar bersama.
       </h1>
       <p class="hero-subtitle">
-        Jawab beberapa pertanyaan ringan, cukup dengan memilih gambar yang paling terasa "ini banget". Sekitar 3–5 menit, tanpa perlu mikir keras, langsung di browser tanpa login.
+        Jawab 10 pertanyaan visual singkat satu per satu, cukup dengan memilih gambar yang paling kamu suka. 3–5 menit, ringkas, tanpa login.
       </p>
       <div class="hero-actions">
-        <button type="button" class="btn-primary" id="btn-hero-scroll">
-          Mulai jelajahi ↓
+        <button type="button" class="btn-primary btn-hero-start" id="btn-hero-scroll">
+          Mulai Eksplorasi Sekarang →
         </button>
         <button type="button" class="btn-outline btn-share-action" id="btn-hero-share" title="Salin atau bagikan link aplikasi">
           🔗 Bagikan Link ke Teman
@@ -102,41 +98,28 @@
       </div>
     </section>
 
-    <!-- 10 Questions Container -->
-    <div class="questions-list" id="questions-list">
-      <!-- 10 Questions rendered by app.js -->
-    </div>
-
-    <!-- Land Size Question (Opsional, di bawah pertanyaan 10) -->
-    <div id="land-size-container">
-      <!-- Rendered by app.js -->
-    </div>
-
-    <!-- Generate Action Bar -->
-    <section class="generate-bar">
-      <p class="generate-hint" id="generate-hint">
-        Tinggal 10 pertanyaan lagi untuk membuka hasil.
-      </p>
-      <button type="button" class="btn-primary btn-generate" id="btn-generate" disabled>
-        ✨ Generate Hasil
-      </button>
-
-      <!-- Secondary Controls: Backup File & Load -->
-      <div class="extra-controls">
-        <button type="button" class="btn-secondary" id="btn-save-file" title="Unduh file cadangan jawaban (.json)">
-          💾 Simpan jawaban ke file
-        </button>
-        <button type="button" class="btn-secondary" id="btn-load-file" title="Muat file cadangan jawaban (.json)">
-          📂 Muat dari file
-        </button>
-        <input type="file" id="file-input-load" accept=".json" style="display:none;" />
+    <!-- Single-Card Quiz Stage (Compact Native Experience) -->
+    <section class="quiz-card-stage" id="quiz-card-stage" aria-live="polite">
+      <div id="quiz-single-card-mount">
+        <!-- Rendered dynamically by app.js: Satu layar satu kartu pertanyaan -->
       </div>
     </section>
+
+    <!-- Secondary File Backup Controls -->
+    <div class="extra-controls-wrapper" id="extra-controls-wrapper">
+      <button type="button" class="btn-secondary" id="btn-save-file" title="Unduh file cadangan jawaban (.json)">
+        💾 Simpan jawaban ke file
+      </button>
+      <button type="button" class="btn-secondary" id="btn-load-file" title="Muat file cadangan jawaban (.json)">
+        📂 Muat dari file
+      </button>
+      <input type="file" id="file-input-load" accept=".json" style="display:none;" />
+    </div>
 
   </main>
 
   <!-- Footer -->
-  <footer class="app-footer" role="contentinfo">
+  <footer class="app-footer" id="app-footer" role="contentinfo">
     <div class="footer-container">
       <div class="footer-brand-wrap">
         <img src="assets/icon-lentera.svg" alt="Studio Lentera" class="footer-logo" width="30" height="40" />
@@ -149,7 +132,7 @@
         Dibuat untuk membantumu menemukan karakter arsitektur dan pembagian ruang yang tepat sebelum membangun rumah. Konsultasikan konsep dan denahmu langsung dengan tim arsitek profesional Studio Lentera.
       </p>
       <div class="footer-contact-row">
-        <a href="https://wa.me/6282229540204" target="_blank" rel="noopener noreferrer" class="footer-wa-link">
+        <a href="https://wa.me/6282229540204?text=Halo%20Studio%20Lentera,%20saya%20ingin%20berkonsultasi%20mengenai%20desain%20rumah%20impian%20saya" target="_blank" rel="noopener noreferrer" class="footer-wa-link" id="footer-wa-link">
           💬 WhatsApp Konsultasi: +62 822-2954-0204
         </a>
       </div>
@@ -177,6 +160,24 @@
       <!-- Modal Body (Printable Area) -->
       <div class="modal-body" id="modal-body">
         
+        <!-- Personalized Client Header Card -->
+        <div class="results-personalization-card" id="results-personalization-card">
+          <div class="personalize-badge">DOKUMEN EKSKLUSIF</div>
+          <div class="personalize-content-row">
+            <div class="personalize-info">
+              <span class="personalize-project-label">PROYEK DESAIN ARSITEKTUR:</span>
+              <h3 class="personalize-project-title" id="results-display-client-name">Rumah Impian Bapak / Ibu</h3>
+            </div>
+            <div class="personalize-edit-wrap">
+              <label for="modal-edit-client-name" class="personalize-input-label">Nama untuk Dokumen &amp; Denah:</label>
+              <div class="personalize-input-row">
+                <input type="text" id="modal-edit-client-name" class="personalize-inline-input" placeholder="Masukkan nama Anda (cth: Keluarga Pratama)..." />
+                <button type="button" class="btn-personalize-update" id="btn-update-client-name">Terapkan</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Section 1: Gaya yang Paling Cocok -->
         <section>
           <h3 class="modal-section-title font-serif">🏆 Gaya yang Paling Cocok</h3>
@@ -200,9 +201,9 @@
         <section class="floorplan-result-section">
           <div class="floorplan-header-row">
             <div>
-              <h3 class="modal-section-title font-serif">📐 Pembagian Ruang & Denah Layak Huni</h3>
+              <h3 class="modal-section-title font-serif">📐 Pradesain Konseptual &amp; Denah Layak Huni</h3>
               <p class="floorplan-subtitle">
-                Denah 2D cerdas berdasarkan kebutuhan ruangmu, memenuhi standar pencahayaan alami dan ventilasi silang (SNI 03-1733).
+                Pradesain 2D cerdas berdasarkan kebutuhan ruangmu, mengadopsi prinsip pencahayaan alami dan ventilasi silang (SNI 03-1733).
               </p>
             </div>
             <!-- Switcher Lantai 1 / Lantai 2 (Muncul jika 2 lantai) -->
@@ -231,9 +232,20 @@
             </div>
           </div>
 
+          <!-- Architectural Disclaimer Card -->
+          <div class="architectural-disclaimer-card">
+            <div class="disclaimer-header">
+              <span class="disclaimer-badge">CATATAN ARSITEK RESMI</span>
+              <span class="disclaimer-tag">PRADESAUN KONSEPTUAL</span>
+            </div>
+            <p class="disclaimer-text">
+              Denah di atas merupakan <strong>Pradesain / Sketsa Konseptual</strong> untuk memvisualisasikan pembagian zonasi ruang kebutuhan Anda. Tahap selanjutnya (analisis tapak riil, kontur tanah, orientasi matahari &amp; arah angin, daya dukung tanah, perhitungan struktur teknik sipil, visualisasi fasad 3D, dan Detail Engineering Design / DED) tetap membutuhkan keahlian dan pendampingan arsitek profesional Studio Lentera.
+            </p>
+          </div>
+
           <!-- Catatan Konsultasi Wajib Studio Lentera -->
           <div class="studio-lentera-callout">
-            <div class="callout-badge">SARAN ARSITEK RESMI</div>
+            <div class="callout-badge">KONSULTASI STUDIO LENTERA</div>
             <p class="callout-text font-serif">
               "Alangkah baiknya denah ini dikonsultasikan kepada <strong>Studio Lentera</strong> untuk membuat yang lebih profesional, perhitungan struktur, analisa tapak, dan gambar kerja teknis."
             </p>
@@ -244,6 +256,18 @@
             </div>
           </div>
         </section>
+
+        <!-- PWA Install Offer Card (Moved to Results Page for High Conversion) -->
+        <div class="results-pwa-card" id="results-pwa-card">
+          <div class="pwa-card-left">
+            <span class="pwa-card-icon">📲</span>
+            <div>
+              <div class="pwa-card-title">Simpan Aplikasi ke Layar Utama HP</div>
+              <p class="pwa-card-desc">Buka kembali denah dan ringkasan rumah impianmu kapan saja tanpa perlu internet.</p>
+            </div>
+          </div>
+          <button type="button" class="btn-install-pwa-card" id="btn-pwa-install">Pasang ke Layar Utama</button>
+        </div>
 
       </div>
 

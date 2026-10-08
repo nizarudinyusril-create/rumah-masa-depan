@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 160" width="480" height="160">
+  <!-- Studio Lentera Official Vector Logo -->
+  <g fill="#914C35">
+    <!-- Lantern Icon Mark -->
+    <!-- Top Cap Bar -->
+    <path d="M 28 8 L 82 8 L 104 68 L 74 100 L 74 132 L 96 150 L 14 150 L 36 132 L 36 100 L 6 68 Z" fill="none" stroke="#914C35" stroke-width="13" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- House Roof inside lantern -->
+    <path d="M 38 100 L 55 80 L 72 100" fill="none" stroke="#914C35" stroke-width="12" stroke-linejoin="round" stroke-linecap="round"/>
+    <!-- Doorway arch in house -->
+    <path d="M 50 148 L 50 128 A 5 5 0 0 1 60 128 L 60 148" fill="none" stroke="#914C35" stroke-width="10" stroke-linecap="round"/>
+    <!-- Upper Flame/Chamber Chamber -->
+    <path d="M 44 26 L 66 26 L 76 68 L 55 92 L 34 68 Z" fill="none" stroke="#914C35" stroke-width="11" stroke-linejoin="round"/>
+    
+    <!-- Wordmark "Studio Lentera" -->
+    <text x="135" y="68" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="56" font-weight="800" letter-spacing="-0.03em" fill="#914C35">Studio</text>
+    <text x="135" y="136" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-size="64" font-weight="800" letter-spacing="-0.03em" fill="#914C35">Lentera</text>
+  </g>
+</svg>
